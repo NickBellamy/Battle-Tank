@@ -2,18 +2,25 @@
 
 #include "TankAIController.h"
 
+/// I'm not certain which header file to reference to enable GetWorld() to be called.
+/// Asked question in forums:
+/// https://community.gamedev.tv/t/which-reference-to-getworld-should-we-be-using/43910
+/// https://answers.unrealengine.com/questions/711371/why-is-getworld-defined-in-three-seperate-places.html
+/// Decided on "Engine/World.h" for now as it makes the most sense to me syntactically
+#include "Engine/World.h"
+
 void ATankAIController::BeginPlay()
 {
 	Super::BeginPlay();
 
-	ATank* ControlledTank = GetControlledTank();
-	if (!ControlledTank)
+	ATank* PlayerTank = GetPlayerTank();
+	if (!PlayerTank)
 	{
-		UE_LOG(LogTemp, Error, TEXT("TankAIController not possessing a Tank Pawn!"));
+		UE_LOG(LogTemp, Error, TEXT("AIController can't find player tank!"));
 	}
 	else
 	{
-		UE_LOG(LogTemp, Warning, TEXT("Tank Pawn found on AI. Name is: %s"), *(ControlledTank->GetName()));
+		UE_LOG(LogTemp, Warning, TEXT("AIController found player Tank called: %s"), *(PlayerTank->GetName()));
 	}
 
 }
@@ -21,4 +28,9 @@ void ATankAIController::BeginPlay()
 ATank* ATankAIController::GetControlledTank() const
 {
 	return Cast<ATank>(GetPawn());
+}
+
+ATank * ATankAIController::GetPlayerTank() const
+{
+	return Cast<ATank>(GetWorld()->GetFirstPlayerController()->GetPawn());
 }
