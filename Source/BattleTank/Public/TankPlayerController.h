@@ -19,4 +19,8 @@ public:
 	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
+
+private:
+	// Move the barrel to point to where the crosshair intersects with the world
+	void AimTowardsCrosshair();
 };
