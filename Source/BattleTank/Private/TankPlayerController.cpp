@@ -22,8 +22,6 @@ void ATankPlayerController::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	UE_LOG(LogTemp, Warning, TEXT("Tick message from TankPlayeController!"));
-
 	AimTowardsCrosshair();
 
 }
