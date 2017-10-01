@@ -24,12 +24,14 @@ void ATankPlayerController::Tick(float DeltaTime)
 
 	UE_LOG(LogTemp, Warning, TEXT("Tick message from TankPlayeController!"));
 
-	 AimTowardsCrosshair();
+	AimTowardsCrosshair();
+
 }
 
 ATank* ATankPlayerController::GetControlledTank() const 
 {
 	return Cast<ATank>(GetPawn());
+
 }
 
 void ATankPlayerController::AimTowardsCrosshair()
@@ -39,4 +41,5 @@ void ATankPlayerController::AimTowardsCrosshair()
 	// Get world location if linetrace through crosshair
 	// If it hits the landscape
 		// Tell controlled tank to aim at this point
+
 }
