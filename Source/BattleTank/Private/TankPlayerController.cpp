@@ -13,6 +13,7 @@ void ATankPlayerController::BeginPlay()
 	}
 	else
 	{
+		// TODO Remove this log - diagnostic only output
 		UE_LOG(LogTemp, Warning, TEXT("Tank Pawn found. Name is: %s"), *(ControlledTank->GetName()));
 	}
 
@@ -40,7 +41,8 @@ void ATankPlayerController::AimTowardsCrosshair()
 
 	if (GetSightRayHitLocation(HitLocation))
 	{
-		UE_LOG(LogTemp, Warning, TEXT("HitLocation: %s"), *HitLocation.ToString());
+		UE_LOG(LogTemp, Warning, TEXT("Look Direction: %s"), *HitLocation.ToString());
+		
 		// TODO Tell controlled tank to aim at this point
 	}
 
@@ -49,6 +51,15 @@ void ATankPlayerController::AimTowardsCrosshair()
 // Get world location of linetrace through crosshair, returns true if hits landscape
 bool ATankPlayerController::GetSightRayHitLocation(FVector& OutHitLocation) const
 {
+	// Find the crosshair position in pixel coordinates
+	int32 ViewportSizeX, ViewportSizeY;
+	GetViewportSize(ViewportSizeX, ViewportSizeY); 
+	FVector2D CrosshairLocation = FVector2D(ViewportSizeX * CrosshairXLocation, ViewportSizeY * CrosshairYLocation);
+
+	// TODO De-project the screen position of the crosshair to a world direction
+
+	// TODO Line trace along that look direction, and see what we hit (up to maximum range)
+
 	OutHitLocation = FVector(1.0);	// TODO Raycast to get actual HitLocation
 	return true;					// TODO Only return true if landscape is hit by Raycast
 

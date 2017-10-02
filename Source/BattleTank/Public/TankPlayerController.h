@@ -15,15 +15,21 @@ class BATTLETANK_API ATankPlayerController : public APlayerController
 public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
-
-	// Get the tank that the player controller is possessing
-	ATank* GetControlledTank() const;
 	
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 	
 private:
+	UPROPERTY(EditAnywhere)	
+		float CrosshairXLocation = 0.5f;
+	
+	UPROPERTY(EditAnywhere) 
+		float CrosshairYLocation = 0.333333f;
+
+	// Get the tank that the player controller is possessing
+	ATank* GetControlledTank() const;
+
 	// Move the barrel to point to where the crosshair intersects with the world
 	void AimTowardsCrosshair();
 
