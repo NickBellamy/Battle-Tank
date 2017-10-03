@@ -33,6 +33,8 @@ private:
 	// Move the barrel to point to where the crosshair intersects with the world
 	void AimTowardsCrosshair();
 
+	bool GetLookDirection(FVector2D ScreenLocation, FVector& LookDirection) const;
+
 	// Return OUT parameter, true if hit landscape	
 	bool GetSightRayHitLocation(FVector& OutHitLocation) const;
 
