@@ -27,6 +27,9 @@ private:
 	UPROPERTY(EditAnywhere) 
 		float CrosshairYLocation = 0.333333f;
 
+	UPROPERTY(EditAnywhere)
+		float LineTraceRange = 1000000.0f;
+
 	// Get the tank that the player controller is possessing
 	ATank* GetControlledTank() const;
 
@@ -34,6 +37,8 @@ private:
 	void AimTowardsCrosshair();
 
 	bool GetLookDirection(FVector2D ScreenLocation, FVector& LookDirection) const;
+
+	bool GetLookVectorHitLocation(FVector LookDirection, FVector& HitLocation) const;
 
 	// Return OUT parameter, true if hit landscape	
 	bool GetSightRayHitLocation(FVector& OutHitLocation) const;
