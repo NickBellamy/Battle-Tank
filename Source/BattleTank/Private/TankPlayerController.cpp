@@ -52,11 +52,11 @@ void ATankPlayerController::AimTowardsCrosshair()
 // Get world location of linetrace through crosshair
 // Returns true if hits anywhere but Sky Box
 // Updates HitLocation with the location to hit
-bool ATankPlayerController::GetSightRayHitLocation(FVector& OutHitLocation) const
+bool ATankPlayerController::GetSightRayHitLocation(FVector& HitLocation) const
 {
 	// Find the crosshair position in pixel coordinates
 	int32 ViewportSizeX, ViewportSizeY;
-	GetViewportSize(ViewportSizeX, ViewportSizeY); 
+	GetViewportSize(ViewportSizeX, ViewportSizeY);
 	FVector2D CrosshairLocation = FVector2D(ViewportSizeX * CrosshairXLocation, ViewportSizeY * CrosshairYLocation);
 
 	// De-project the screen position of the crosshair to a world direction
@@ -64,10 +64,10 @@ bool ATankPlayerController::GetSightRayHitLocation(FVector& OutHitLocation) cons
 	if (GetLookDirection(CrosshairLocation, LookDirection))
 	{
 		// Line trace along that look direction, and see what we hit (up to maximum range)
-		GetLookVectorHitLocation(LookDirection, OutHitLocation);
+		GetLookVectorHitLocation(LookDirection, HitLocation);
 	}
 
-	return true;					// TODO Only return true if landscape is hit by Raycast
+	return true;	// TODO Only return true if landscape is hit by Raycast
 
 }
 
