@@ -44,10 +44,9 @@ void ATankPlayerController::AimTowardsCrosshair()
 	// See here: https://community.gamedev.tv/t/unreal-provides-a-much-simpler-way-to-accomplish-all-of-this/2557
 	// https://docs.unrealengine.com/latest/INT/API/Runtime/Engine/GameFramework/APlayerController/GetHitResultAtScreenPosition/1/index.html
 	if (GetSightRayHitLocation(HitLocation))
-	{
-		UE_LOG(LogTemp, Warning, TEXT("HitLocation: %s"), *HitLocation.ToString())
-		
-		// TODO Tell controlled tank to aim at this point
+	{		
+		// Tell controlled tank to aim at this point
+		GetControlledTank()->AimAt(HitLocation);
 	}
 
 }
