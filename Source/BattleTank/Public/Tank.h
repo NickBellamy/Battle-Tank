@@ -18,6 +18,7 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
+	// Tells the tank where to aim
 	void AimAt(FVector HitLocation);
 
 protected:
