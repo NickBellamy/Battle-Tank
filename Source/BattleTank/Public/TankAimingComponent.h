@@ -24,6 +24,7 @@ public:
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
-		
+	// Function to make tank aim at a location, delegated from Tank class
+	void AimAt(FVector HitLocation);	
 	
 };
