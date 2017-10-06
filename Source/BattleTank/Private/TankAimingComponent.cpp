@@ -40,10 +40,17 @@ void UTankAimingComponent::TickComponent(float DeltaTime, ELevelTick TickType, F
 
 void UTankAimingComponent::AimAt(FVector HitLocation)
 {
-	// Diagnostic log of HitLocation and BarrelLocation
-	FString TankName = GetOwner()->GetName();
-	FVector BarrelLocation = Barrel->GetComponentLocation();
-	UE_LOG(LogTemp, Warning, TEXT("%s aiming at: %s from: %s"), *TankName, *HitLocation.ToString(), *BarrelLocation.ToString());
+	if (Barrel)
+	{
+		// Diagnostic log of HitLocation and BarrelLocation
+		FString TankName = GetOwner()->GetName();
+		FVector BarrelLocation = Barrel->GetComponentLocation();
+		UE_LOG(LogTemp, Warning, TEXT("%s aiming at: %s from: %s"), *TankName, *HitLocation.ToString(), *BarrelLocation.ToString());
+	}
+	else
+	{
+		UE_LOG(LogTemp, Error, TEXT("Barrel not found from class %s"), *this->GetClass()->GetName());
+	}
 
 	// TODO Make the tank aim at the HitLocation
 
