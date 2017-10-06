@@ -19,6 +19,11 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
+	// Called in the Tank Blueprint BeginPlay method
+	// Allows this to be soft coded rather than hard coded in C++
+	UFUNCTION(BLueprintCallable, Category = Setup)
+	void SetBarrelReference(UStaticMeshComponent* BarrelToSet);
+
 	// Tells the tank where to aim
 	void AimAt(FVector HitLocation);
 
