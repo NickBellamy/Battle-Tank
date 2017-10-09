@@ -51,8 +51,8 @@ void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed)
 	// Calculate the Launch Velocity and convert to unit vector if successful
 	FVector OutLaunchVelocity;
 	FVector StartLocation = Barrel->GetSocketLocation(FName("Projectile"));
-	if (UGameplayStatics::SuggestProjectileVelocity(this, OutLaunchVelocity, StartLocation, HitLocation, LaunchSpeed, 
-													false, 0.0f, 0.0f, ESuggestProjVelocityTraceOption::DoNotTrace))
+	if (UGameplayStatics::SuggestProjectileVelocity(this, OutLaunchVelocity, StartLocation, HitLocation,
+													LaunchSpeed, ESuggestProjVelocityTraceOption::DoNotTrace))
 	{
 		// Convert to unit vector to get direction of launch
 		FVector AimDirection = OutLaunchVelocity.GetSafeNormal();
