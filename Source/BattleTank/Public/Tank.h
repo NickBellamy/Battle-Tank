@@ -7,6 +7,13 @@
 #include "TankAimingComponent.h"
 #include "Tank.generated.h"
 
+// TODO Forward declaration implemented for demonstration puposes
+//		Replace with #include to TankBarrel.h at a later date?
+//		Seems best practice to try to avoid forward declarations
+//		where possible:
+//		https://google.github.io/styleguide/cppguide.html#Forward_Declarations
+class UTankBarrel;
+
 UCLASS()
 class BATTLETANK_API ATank : public APawn
 {
@@ -22,7 +29,7 @@ public:
 	// Called in the Tank Blueprint BeginPlay method
 	// Allows this to be soft coded rather than hard coded in C++
 	UFUNCTION(BLueprintCallable, Category = Setup)
-	void SetBarrelReference(UStaticMeshComponent* BarrelToSet);
+	void SetBarrelReference(UTankBarrel* BarrelToSet);
 
 	// Tells the tank where to aim
 	void AimAt(FVector HitLocation);

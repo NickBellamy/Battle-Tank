@@ -6,7 +6,14 @@
 #include "Components/ActorComponent.h"
 #include "TankAimingComponent.generated.h"
 
+// TODO Forward declaration implemented for demonstration puposes
+//		Replace with #include to TankBarrel.h at a later date?
+//		Seems best practice to try to avoid forward declarations
+//		where possible:
+//		https://google.github.io/styleguide/cppguide.html#Forward_Declarations
+class UTankBarrel;
 
+// Holds barrel's properties and methods
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class BATTLETANK_API UTankAimingComponent : public UActorComponent
 {
@@ -17,7 +24,7 @@ public:
 	UTankAimingComponent();
 
 	// Setter method
-	void SetBarrelReference(UStaticMeshComponent* BarrelToSet);
+	void SetBarrelReference(UTankBarrel* BarrelToSet);
 
 	// TODO Add set turret reference
 
@@ -26,7 +33,7 @@ public:
 	
 private:
 	// Barrel component of the Tank
-	UStaticMeshComponent* Barrel = nullptr;
+	UTankBarrel* Barrel = nullptr;
 
 	void MoveBarrelTowards(FVector AimDireciton) const;
 };
