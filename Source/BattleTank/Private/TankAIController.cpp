@@ -1,6 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "TankAIController.h"
+#include "Tank.h"
 
 /// I'm not certain which header file to reference to enable GetWorld() to be called.
 /// Asked question in forums:

@@ -6,11 +6,6 @@
 #include "Components/ActorComponent.h"
 #include "TankAimingComponent.generated.h"
 
-// TODO Forward declaration implemented for demonstration puposes
-//		Replace with #include to TankBarrel.h at a later date?
-//		Seems best practice to try to avoid forward declarations
-//		where possible:
-//		https://google.github.io/styleguide/cppguide.html#Forward_Declarations
 class UTankBarrel;
 
 // Holds barrel's properties and methods
