@@ -18,9 +18,6 @@ public:
 	// Sets default values for this pawn's properties
 	ATank();
 
-	// Called every frame
-	virtual void Tick(float DeltaTime) override;
-
 	// Called in the Tank Blueprint BeginPlay method
 	// Allows this to be soft coded rather than hard coded in C++
 	UFUNCTION(BLueprintCallable, Category = Setup)
