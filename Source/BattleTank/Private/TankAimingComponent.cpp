@@ -67,6 +67,6 @@ void UTankAimingComponent::MoveBarrelTowards(FVector AimDirection) const
 	FRotator AimDirectionRotator = AimDirection.Rotation();
 	FRotator DeltaRotator = AimDirectionRotator - BarrelRotator;
 
-	Barrel->Elevate(5);	// TODO Change passed value; 5.0 entered for testing purposes
+	Barrel->Elevate(DeltaRotator.Pitch);
 
 }
