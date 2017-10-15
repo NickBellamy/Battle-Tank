@@ -6,32 +6,46 @@
 #include "GameFramework/Actor.h"
 #include "Kismet/GameplayStatics.h"
 #include "TankBarrel.h"
+#include "TankTurret.h"
 
 // Sets default values for this component's properties
 UTankAimingComponent::UTankAimingComponent()
 {
 	// Set this component to be initialized when the game starts, and to be ticked every frame.  You can turn these features
 	// off to improve performance if you don't need them.
-	PrimaryComponentTick.bCanEverTick = true;	// TODO Should this really tick?
+	PrimaryComponentTick.bCanEverTick = false;
 
 	// ...
 }
 
 void UTankAimingComponent::SetBarrelReference(UTankBarrel* BarrelToSet)
-{
+{	
+	// Pointer protection
+	if (!BarrelToSet)
+	{
+		UE_LOG(LogTemp, Error, TEXT("Barrel not found from class %s"), *this->GetClass()->GetName());
+		return;
+	}
+	
 	Barrel = BarrelToSet;
+
+}
+
+void UTankAimingComponent::SetTurretReference(UTankTurret* TurretToSet)
+{
+	// Pointer protection
+	if (!TurretToSet)
+	{
+		UE_LOG(LogTemp, Error, TEXT("Turret not found from class %s"), *this->GetClass()->GetName());
+		return;
+	}
+
+	Turret = TurretToSet;
 
 }
 
 void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed)
 {
-	// Pointer protection
-	if (!Barrel)
-	{
-		UE_LOG(LogTemp, Error, TEXT("Barrel not found from class %s"), *this->GetClass()->GetName());
-		return;
-	}
-
 	// Calculate the Launch Velocity and convert to unit vector if successful
 	FVector OutLaunchVelocity;
 	FVector StartLocation = Barrel->GetSocketLocation(FName("Projectile"));
@@ -67,6 +81,10 @@ void UTankAimingComponent::MoveBarrelTowards(FVector AimDirection) const
 	FRotator AimDirectionRotator = AimDirection.Rotation();
 	FRotator DeltaRotator = AimDirectionRotator - BarrelRotator;
 
-	Barrel->Elevate(DeltaRotator.Pitch);
+	// TODO Address Warnings in console from possible collision mesh conflicts:
+	// LogPhysics: Warning: PopulatePhysXGeometryAndTransform(Convex): ConvexElem invalid
+	// LogPhysics: Warning: ForeachShape(Convex) : [/ Game / Tank / tank_fbx_Turret.tank_fbx_Turret] ScaledElem[0] invalid
 
+	Barrel->Elevate(DeltaRotator.Pitch);
+	Turret->Rotate(DeltaRotator.Yaw);
 }

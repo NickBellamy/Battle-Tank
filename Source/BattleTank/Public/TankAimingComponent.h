@@ -7,8 +7,9 @@
 #include "TankAimingComponent.generated.h"
 
 class UTankBarrel;
+class UTankTurret;
 
-// Holds barrel's properties and methods
+// Holds barrel's & turret's properties and methods
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class BATTLETANK_API UTankAimingComponent : public UActorComponent
 {
@@ -21,7 +22,8 @@ public:
 	// Setter method
 	void SetBarrelReference(UTankBarrel* BarrelToSet);
 
-	// TODO Add set turret reference
+	// Setter method
+	void SetTurretReference(UTankTurret* TurretToSet);
 
 	// Function to make tank aim at a location, delegated from Tank class
 	void AimAt(FVector HitLocation, float LaunchSpeed);
@@ -30,5 +32,9 @@ private:
 	// Barrel component of the Tank
 	UTankBarrel* Barrel = nullptr;
 
+	// Turret component of the Tank
+	UTankTurret* Turret = nullptr;
+
 	void MoveBarrelTowards(FVector AimDireciton) const;
+
 };
