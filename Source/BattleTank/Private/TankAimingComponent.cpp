@@ -2,7 +2,6 @@
 
 #include "TankAimingComponent.h"
 #include "Components/StaticMeshComponent.h"
-#include "Engine/World.h"	// Only needed for GetWorld() to output time in diagnostic log
 #include "GameFramework/Actor.h"
 #include "Kismet/GameplayStatics.h"
 #include "TankBarrel.h"
@@ -60,17 +59,9 @@ void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed) const
 		FVector AimDirection = OutLaunchVelocity.GetSafeNormal();
 
 		MoveBarrelAndTurretTowards(AimDirection);
-
-		// Diagnostic Log
-		float Time = GetWorld()->GetTimeSeconds();
-		UE_LOG(LogTemp, Warning, TEXT("%f Aim solution found"), Time);
 	}
-	else
-	{
-		// Diagnostic Log
-		float Time = GetWorld()->GetTimeSeconds();
-		UE_LOG(LogTemp, Warning, TEXT("%f No aim solve found"), Time);
-	}
+	
+	// No aiming solution found if execution reaches this line
 	
 }
 
