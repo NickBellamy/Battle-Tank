@@ -29,6 +29,9 @@ public:
 	UFUNCTION(BLueprintCallable, Category = Setup)
 		void SetTurretReference(UTankTurret* TurretToSet);
 
+	UFUNCTION(BLueprintCallable)
+		void Fire() const;
+
 	// Tells the tank where to aim
 	void AimAt(FVector HitLocation) const;
 
