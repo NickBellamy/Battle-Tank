@@ -22,20 +22,17 @@ public:
 	// Called in the Tank Blueprint BeginPlay method
 	// Allows this to be soft coded rather than hard coded in C++
 	UFUNCTION(BLueprintCallable, Category = Setup)
-	void SetBarrelReference(UTankBarrel* BarrelToSet);
+		void SetBarrelReference(UTankBarrel* BarrelToSet);
 
 	// Called in the Tank Blueprint BeginPlay method
 	// Allows this to be soft coded rather than hard coded in C++
 	UFUNCTION(BLueprintCallable, Category = Setup)
-	void SetTurretReference(UTankTurret* TurretToSet);
+		void SetTurretReference(UTankTurret* TurretToSet);
 
 	// Tells the tank where to aim
-	void AimAt(FVector HitLocation);
+	void AimAt(FVector HitLocation) const;
 
 protected:
-	// Called when the game starts or when spawned
-	virtual void BeginPlay() override;
-
 	UTankAimingComponent* TankAimingComponent = nullptr;
 
 private:

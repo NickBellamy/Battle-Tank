@@ -26,7 +26,7 @@ public:
 	void SetTurretReference(UTankTurret* TurretToSet);
 
 	// Function to make tank aim at a location, delegated from Tank class
-	void AimAt(FVector HitLocation, float LaunchSpeed);
+	void AimAt(FVector HitLocation, float LaunchSpeed) const;
 	
 private:
 	// Barrel component of the Tank
@@ -35,6 +35,6 @@ private:
 	// Turret component of the Tank
 	UTankTurret* Turret = nullptr;
 
-	void MoveBarrelTowards(FVector AimDireciton) const;
+	void MoveBarrelAndTurretTowards(FVector AimDireciton) const;
 
 };

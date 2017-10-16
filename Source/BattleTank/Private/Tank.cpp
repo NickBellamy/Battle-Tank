@@ -26,13 +26,6 @@ void ATank::SetTurretReference(UTankTurret* TurretToSet)
 	TankAimingComponent->SetTurretReference(TurretToSet);
 }
 
-// Called when the game starts or when spawned
-void ATank::BeginPlay()
-{
-	Super::BeginPlay();
-	
-}
-
 // Called to bind functionality to input
 void ATank::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
@@ -41,7 +34,7 @@ void ATank::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 }
 
 // Directs the tank where to aim
-void ATank::AimAt(FVector HitLocation)
+void ATank::AimAt(FVector HitLocation) const
 {
 	// Delegate Aiming to TankAimingComponent
 	TankAimingComponent->AimAt(HitLocation, LaunchSpeed);

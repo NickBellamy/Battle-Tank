@@ -35,7 +35,7 @@ private:
 	ATank* GetControlledTank() const;
 
 	// Move the barrel of the tank to point to where the crosshair intersects with the world
-	void AimTowardsCrosshair();
+	void AimTowardsCrosshair() const;
 
 	// Returns true if look direction can be determined
 	// Sets out parameter LookDireciton to a unit vector of that direction

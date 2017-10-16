@@ -35,7 +35,7 @@ ATank* ATankPlayerController::GetControlledTank() const
 
 }
 
-void ATankPlayerController::AimTowardsCrosshair()
+void ATankPlayerController::AimTowardsCrosshair() const
 {
 	if (!GetControlledTank()) { return; }
 

@@ -44,7 +44,7 @@ void UTankAimingComponent::SetTurretReference(UTankTurret* TurretToSet)
 
 }
 
-void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed)
+void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed) const
 {
 	// Calculate the Launch Velocity and convert to unit vector if successful
 	FVector OutLaunchVelocity;
@@ -59,7 +59,7 @@ void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed)
 		// Convert to unit vector to get direction of launch
 		FVector AimDirection = OutLaunchVelocity.GetSafeNormal();
 
-		MoveBarrelTowards(AimDirection);
+		MoveBarrelAndTurretTowards(AimDirection);
 
 		// Diagnostic Log
 		float Time = GetWorld()->GetTimeSeconds();
@@ -74,7 +74,7 @@ void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed)
 	
 }
 
-void UTankAimingComponent::MoveBarrelTowards(FVector AimDirection) const
+void UTankAimingComponent::MoveBarrelAndTurretTowards(FVector AimDirection) const
 {
 	// Calculate the delta between the current, and desired barrel rotation
 	FRotator BarrelRotator = Barrel->GetForwardVector().Rotation();
@@ -85,6 +85,6 @@ void UTankAimingComponent::MoveBarrelTowards(FVector AimDirection) const
 	// LogPhysics: Warning: PopulatePhysXGeometryAndTransform(Convex): ConvexElem invalid
 	// LogPhysics: Warning: ForeachShape(Convex) : [/ Game / Tank / tank_fbx_Turret.tank_fbx_Turret] ScaledElem[0] invalid
 
-	Barrel->Elevate(DeltaRotator.Pitch);
-	Turret->Rotate(DeltaRotator.Yaw);
+	Barrel->Elevate(DeltaRotator.Pitch);	// Elevate barrel
+	Turret->Rotate(DeltaRotator.Yaw);		// Rotate Turret
 }
