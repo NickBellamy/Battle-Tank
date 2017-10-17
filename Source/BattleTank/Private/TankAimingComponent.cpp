@@ -72,10 +72,6 @@ void UTankAimingComponent::MoveBarrelAndTurretTowards(FVector AimDirection) cons
 	FRotator AimDirectionRotator = AimDirection.Rotation();
 	FRotator DeltaRotator = AimDirectionRotator - BarrelRotator;
 
-	// TODO Address Warnings in console from possible collision mesh conflicts:
-	// LogPhysics: Warning: PopulatePhysXGeometryAndTransform(Convex): ConvexElem invalid
-	// LogPhysics: Warning: ForeachShape(Convex) : [/ Game / Tank / tank_fbx_Turret.tank_fbx_Turret] ScaledElem[0] invalid
-
 	Barrel->Elevate(DeltaRotator.Pitch);	// Elevate barrel
 	Turret->Rotate(DeltaRotator.Yaw);		// Rotate Turret
 }
