@@ -1,8 +1,10 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "Tank.h"
-#include "Engine/World.h"	// Only needed for diagnostic log in Fire()
+#include "Engine/World.h"
+#include "Projectile.h"
 #include "TankAimingComponent.h"
+#include "TankBarrel.h"
 
 // Sets default values
 ATank::ATank()
@@ -19,6 +21,7 @@ ATank::ATank()
 void ATank::SetBarrelReference(UTankBarrel* BarrelToSet)
 {
 	TankAimingComponent->SetBarrelReference(BarrelToSet);
+	Barrel = BarrelToSet;
 }
 
 // Called in the Tank Blueprint in BeginPlay()
@@ -46,4 +49,17 @@ void ATank::Fire() const
 {
 	float Time = GetWorld()->GetTimeSeconds();
 	UE_LOG(LogTemp, Warning, TEXT("%f Tank fires!"), Time);
+
+	// Pointer protection
+	if (!Barrel)
+	{
+		UE_LOG(LogTemp, Error, TEXT("Barrel not found from class %s"), *this->GetClass()->GetName());
+		return;
+	}
+
+	// Spawn a projectile at the socket location on the barrel
+	FName SocketName = FName("Projectile");
+	FVector SocketLocation = Barrel->GetSocketLocation(SocketName);
+	FRotator SocketRotation = Barrel->GetSocketRotation(SocketName);
+	GetWorld()->SpawnActor<AProjectile>(ProjectileBlueprint, SocketLocation, SocketRotation);
 }
