@@ -21,11 +21,4 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
-private:
-	// Get the tank that the AI controller is possessing
-	ATank* GetControlledTank() const;
-
-	// Get the tank that the player controller is possessing
-	ATank* GetPlayerTank() const;
-
 };
