@@ -31,7 +31,7 @@ public:
 		void SetTurretReference(UTankTurret* TurretToSet);
 
 	UFUNCTION(BLueprintCallable)
-		void Fire() const;
+		void Fire();
 
 	// Tells the tank where to aim
 	void AimAt(FVector HitLocation) const;
@@ -51,5 +51,9 @@ private:
 
 	// Local barrel for spawning projectiles
 	UTankBarrel* Barrel = nullptr;
+
+	float ReloadTimeInSeconds = 3;
+
+	double LastFireTime = 0;
 
 };
