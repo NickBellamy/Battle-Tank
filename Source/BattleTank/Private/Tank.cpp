@@ -47,9 +47,6 @@ void ATank::AimAt(FVector HitLocation) const
 
 void ATank::Fire() const
 {
-	float Time = GetWorld()->GetTimeSeconds();
-	UE_LOG(LogTemp, Warning, TEXT("%f Tank fires!"), Time);
-
 	// Pointer protection
 	if (!Barrel)
 	{
@@ -61,5 +58,7 @@ void ATank::Fire() const
 	FName SocketName = FName("Projectile");
 	FVector SocketLocation = Barrel->GetSocketLocation(SocketName);
 	FRotator SocketRotation = Barrel->GetSocketRotation(SocketName);
-	GetWorld()->SpawnActor<AProjectile>(ProjectileBlueprint, SocketLocation, SocketRotation);
+	AProjectile* Projectile = GetWorld()->SpawnActor<AProjectile>(ProjectileBlueprint, SocketLocation, SocketRotation);
+
+	Projectile->LaunchProjectile(LaunchSpeed);
 }
