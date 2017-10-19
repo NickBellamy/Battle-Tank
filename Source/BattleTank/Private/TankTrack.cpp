@@ -11,4 +11,12 @@ void UTankTrack::SetThrottle(float Throttle)
 
 	//TODO Clamp throttle value between -1 and +1 so player can't overdrive
 
+	// Setup parameters for AddForceAtLocation
+	FVector ForceApplied = GetForwardVector() * Throttle * TrackMaxDrivingForce;
+	FVector ForceLocation = GetComponentLocation();
+	// Get tank body and cast it to UPrimitiveComponent so AddForceAtLocation can be called
+	UPrimitiveComponent* TankRoot = Cast<UPrimitiveComponent>(GetOwner()->GetRootComponent());
+
+	// Applies force on the tank body at the location of the track
+	TankRoot->AddForceAtLocation(ForceApplied, ForceLocation);
 }
