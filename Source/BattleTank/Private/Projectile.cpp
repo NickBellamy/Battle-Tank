@@ -1,7 +1,6 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "Projectile.h"
-#include "Engine/World.h"	// Only needed for GetWorld() in diagnostic log
 #include "GameFramework/ProjectileMovementComponent.h"
 
 
@@ -35,10 +34,6 @@ void AProjectile::Tick(float DeltaTime)
 
 void AProjectile::LaunchProjectile(float Speed) const
 {
-	// Diagnostic log
-	float Time = GetWorld()->GetTimeSeconds();
-	UE_LOG(LogTemp, Warning, TEXT("%f Projectile Launched at %fm/s!"), Time, Speed);
-
 	// ForwardVector is the correct orientation as on initialization of the projectile 
 	// in Tank::Fire(), the rotation is set to be the same as the tank barrel's rotation
 	ProjectileMovement->SetVelocityInLocalSpace(FVector::ForwardVector * Speed);
