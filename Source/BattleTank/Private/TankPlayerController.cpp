@@ -4,23 +4,6 @@
 #include "Engine/World.h"
 #include "Tank.h"
 
-void ATankPlayerController::BeginPlay()
-{
-	Super::BeginPlay();
-	
-	ATank* ControlledTank = GetControlledTank();
-	if (!ControlledTank)
-	{
-		UE_LOG(LogTemp, Error, TEXT("TankPlayerController not possessing a Tank Pawn!"));
-	}
-	else
-	{
-		// TODO Remove this log - diagnostic only output
-		UE_LOG(LogTemp, Warning, TEXT("Tank Pawn found. Name is: %s"), *(ControlledTank->GetName()));
-	}
-
-}
-
 void ATankPlayerController::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
