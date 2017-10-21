@@ -23,6 +23,9 @@ public:
 	UFUNCTION(BLueprintCallable, Category = Input)
 		void IntendMoveForward(float Throw);
 
+	UFUNCTION(BLueprintCallable, Category = Input)
+		void IntendTurnRight(float Throw);
+
 private:
 	UTankTrack* LeftTrack = nullptr;
 	UTankTrack* RightTrack = nullptr;

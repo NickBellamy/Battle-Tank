@@ -15,9 +15,6 @@ void UTankMovementComponent::Initialise(UTankTrack* LeftTrackToSet, UTankTrack* 
 
 void UTankMovementComponent::IntendMoveForward(float Throw)
 {
-	// Diagnostic log
-	UE_LOG(LogTemp, Warning, TEXT("Intend to move forward throw: %f"), Throw);
-
 	// TODO Clamp the Throw value between +1 and -0.5
 	
 	// TODO Prevent double speed due to dual control setup
@@ -26,5 +23,14 @@ void UTankMovementComponent::IntendMoveForward(float Throw)
 
 	LeftTrack->SetThrottle(Throw);
 	RightTrack->SetThrottle(Throw);
+
+}
+
+void UTankMovementComponent::IntendTurnRight(float Throw)
+{
+	// TODO Prevent double speed due to dual control setup
+
+	LeftTrack->SetThrottle(Throw);
+	RightTrack->SetThrottle(-Throw);
 
 }
