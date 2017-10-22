@@ -12,10 +12,12 @@ void UTankMovementComponent::Initialise(UTankTrack* LeftTrackToSet, UTankTrack* 
 
 void UTankMovementComponent::RequestDirectMove(const FVector& MoveVelocity, bool bForceMaxSpeed)
 {
-	//Diagnostic Log
-	FString TankName = GetOwner()->GetName();
-	FString MoveVelocityString = MoveVelocity.ToString();
-	UE_LOG(LogTemp, Warning, TEXT("%s vectoring towards : %s"), *TankName, *MoveVelocityString);
+	// No need to call Super as we are completely overriding this function
+
+	FVector TankForwardDirection = GetOwner()->GetActorForwardVector().GetSafeNormal();
+	FVector AIForwardIntention = MoveVelocity.GetSafeNormal();
+
+	IntendMoveForward(FVector::DotProduct(TankForwardDirection, AIForwardIntention));
 }
 
 void UTankMovementComponent::IntendMoveForward(float Throw)
