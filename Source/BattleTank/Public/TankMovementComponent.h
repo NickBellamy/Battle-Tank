@@ -17,20 +17,20 @@ class BATTLETANK_API UTankMovementComponent : public UNavMovementComponent
 	GENERATED_BODY()
 	
 public:
-	UFUNCTION(BLueprintCallable, Category = Setup)
+	UFUNCTION(BLueprintCallable, Category = "Setup")
 		void Initialise(UTankTrack* LeftTrackToSet, UTankTrack* RightTrackToSet);
 
-	UFUNCTION(BLueprintCallable, Category = Input)
+	UFUNCTION(BLueprintCallable, Category = "Input")
 		void IntendMoveForward(float Throw);
 
-	UFUNCTION(BLueprintCallable, Category = Input)
+	UFUNCTION(BLueprintCallable, Category = "Input")
 		void IntendTurnRight(float Throw);
-
-	// TODO Does this have to be public?
-	virtual void RequestDirectMove(const FVector& MoveVelocity, bool bForceMaxSpeed) override;
 
 private:
 	UTankTrack* LeftTrack = nullptr;
 	UTankTrack* RightTrack = nullptr;
+
+	// Called in pathfinding logic by the MoveToActor() call in TankAIController
+	virtual void RequestDirectMove(const FVector& MoveVelocity, bool bForceMaxSpeed) override;
 	
 };
