@@ -10,6 +10,9 @@ void UTankMovementComponent::Initialise(UTankTrack* LeftTrackToSet, UTankTrack* 
 
 }
 
+// This function call is triggered by the MoveToActor() call in the TankAIController
+// It is overridden to allow the MoveVelocity to be passed into our custom control system
+// which can then be utilised by the AI
 void UTankMovementComponent::RequestDirectMove(const FVector& MoveVelocity, bool bForceMaxSpeed)
 {
 	// No need to call Super as we are completely overriding this function
@@ -18,6 +21,7 @@ void UTankMovementComponent::RequestDirectMove(const FVector& MoveVelocity, bool
 	FVector AIForwardIntention = MoveVelocity.GetSafeNormal();
 
 	IntendMoveForward(FVector::DotProduct(TankForwardDirection, AIForwardIntention));
+	IntendTurnRight(FVector::CrossProduct(TankForwardDirection, AIForwardIntention).Z);
 }
 
 void UTankMovementComponent::IntendMoveForward(float Throw)
