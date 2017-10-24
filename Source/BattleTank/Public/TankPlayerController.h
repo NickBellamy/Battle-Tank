@@ -17,6 +17,11 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 	
+protected:
+	// Get the tank pawn that the player controller is possessing and cast it to ATank
+	UFUNCTION(BlueprintCallable, Category = "Setup")
+		ATank* GetControlledTank() const;
+
 private:
 	UPROPERTY(EditDefaultsOnly)	
 		float CrosshairXLocation = 0.5f;
@@ -26,9 +31,6 @@ private:
 
 	UPROPERTY(EditDefaultsOnly)
 		float LineTraceRange = 1000000.0f;
-
-	// Get the tank pawn that the player controller is possessing and cast it to ATank
-	ATank* GetControlledTank() const;
 
 	// Move the barrel of the tank to point to where the crosshair intersects with the world
 	void AimTowardsCrosshair() const;
