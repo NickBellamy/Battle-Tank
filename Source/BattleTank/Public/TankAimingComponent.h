@@ -6,6 +6,14 @@
 #include "Components/ActorComponent.h"
 #include "TankAimingComponent.generated.h"
 
+UENUM()
+enum class EFiringState : uint8
+{
+	Reloading,
+	Aiming,
+	Locked
+};
+
 class UTankBarrel;
 class UTankTurret;
 
@@ -27,6 +35,10 @@ public:
 
 	// Function to make tank aim at a location, delegated from Tank class
 	void AimAt(FVector HitLocation, float LaunchSpeed) const;
+
+protected:
+	UPROPERTY(BlueprintReadOnly, Category = "State")
+	EFiringState FiringStatus = EFiringState::Aiming;
 	
 private:
 	// Barrel component of the Tank
