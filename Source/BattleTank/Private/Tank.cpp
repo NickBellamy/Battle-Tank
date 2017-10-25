@@ -14,6 +14,15 @@ ATank::ATank()
 
 }
 
+void ATank::BeginPlay()
+{
+	Super::BeginPlay();
+
+	TankAimingComponent = FindComponentByClass<UTankAimingComponent>();
+	//Barrel = FindComponentByClass<UTankBarrel>();
+
+}
+
 // Directs the tank where to aim
 void ATank::AimAt(FVector HitLocation) const
 {
