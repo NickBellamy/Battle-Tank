@@ -1,8 +1,6 @@
 // Copyright Nick Bellamy.
 
 #include "TankAimingComponent.h"
-#include "Components/StaticMeshComponent.h"
-#include "GameFramework/Actor.h"
 #include "Kismet/GameplayStatics.h"
 #include "TankBarrel.h"
 #include "TankTurret.h"
@@ -14,7 +12,6 @@ UTankAimingComponent::UTankAimingComponent()
 	// off to improve performance if you don't need them.
 	PrimaryComponentTick.bCanEverTick = false;
 
-	// ...
 }
 
 void UTankAimingComponent::Initialise(UTankBarrel* BarrelToSet, UTankTurret* TurretToSet)
