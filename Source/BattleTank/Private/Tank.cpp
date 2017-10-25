@@ -17,8 +17,7 @@ ATank::ATank()
 // Directs the tank where to aim
 void ATank::AimAt(FVector HitLocation) const
 {
-	// Pointer protection
-	if (!TankAimingComponent) { return; }
+	if (!ensure(TankAimingComponent)) { return; }
 
 	// Delegate Aiming to TankAimingComponent
 	TankAimingComponent->AimAt(HitLocation, LaunchSpeed);
@@ -27,12 +26,7 @@ void ATank::AimAt(FVector HitLocation) const
 
 void ATank::Fire()
 {
-	// Pointer protection
-	if (!Barrel)
-	{
-		UE_LOG(LogTemp, Error, TEXT("Barrel not found from class %s"), *this->GetClass()->GetName());
-		return;
-	}
+	if (!ensure(Barrel)) { return; }
 
 	bool isReloaded = (FPlatformTime::Seconds() - LastFireTime) > ReloadTimeInSeconds;
 	

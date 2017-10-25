@@ -17,7 +17,7 @@ void ATankAIController::Tick(float DeltaTime)
 	ATank* ControlledTank = Cast<ATank>(GetPawn());
 	ATank* PlayerTank = Cast<ATank>(GetWorld()->GetFirstPlayerController()->GetPawn());
 
-	if (PlayerTank)
+	if (ensure(PlayerTank))
 	{
 		// Move towards the player
 		MoveToActor(PlayerTank, AcceptanceRadius);	// TODO Check AcceptanceRadius is sensible
@@ -27,10 +27,6 @@ void ATankAIController::Tick(float DeltaTime)
 
 		// Fire at player
 		ControlledTank->Fire();		// TODO Fire at the player if ready
-	}
-	else
-	{
-		UE_LOG(LogTemp, Error, TEXT("Player Tank not found in TankAIController!"));
 	}
 
 }
