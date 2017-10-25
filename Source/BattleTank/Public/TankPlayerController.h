@@ -6,7 +6,6 @@
 #include "GameFramework/PlayerController.h"
 #include "TankPlayerController.generated.h"
 
-class ATank;
 class UTankAimingComponent;
 
 /**
@@ -25,10 +24,6 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
-	// Get the tank pawn that the player controller is possessing and cast it to ATank
-	UFUNCTION(BlueprintCallable, Category = "Setup")
-		ATank* GetControlledTank() const;
-
 	// Sets an event that can be triggered and leveraged in blueprint
 	UFUNCTION(BlueprintImplementableEvent, Category = "Setup")
 		void FoundAimingComponent(UTankAimingComponent* AimCompRef);
@@ -44,7 +39,7 @@ private:
 		float LineTraceRange = 1000000.0f;
 
 	// Move the barrel of the tank to point to where the crosshair intersects with the world
-	void AimTowardsCrosshair() const;
+	void AimTowardsCrosshair();
 
 	// Returns true if look direction can be determined
 	// Sets out parameter LookDireciton to a unit vector of that direction

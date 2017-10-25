@@ -2,14 +2,13 @@
 
 #include "TankPlayerController.h"
 #include "Engine/World.h"
-#include "Tank.h"
 #include "TankAimingComponent.h"
 
 void ATankPlayerController::BeginPlay()
 {
 	Super::BeginPlay();
 
-	UTankAimingComponent* AimingComponent = GetControlledTank()->FindComponentByClass<UTankAimingComponent>();
+	UTankAimingComponent* AimingComponent = GetPawn()->FindComponentByClass<UTankAimingComponent>();
 	
 	if (!ensure(AimingComponent)) { return; }
 	
@@ -25,15 +24,11 @@ void ATankPlayerController::Tick(float DeltaTime)
 
 }
 
-ATank* ATankPlayerController::GetControlledTank() const 
+void ATankPlayerController::AimTowardsCrosshair()
 {
-	return Cast<ATank>(GetPawn());
+	UTankAimingComponent* AimingComponent = GetPawn()->FindComponentByClass<UTankAimingComponent>();
 
-}
-
-void ATankPlayerController::AimTowardsCrosshair() const
-{
-	if (!ensure(GetControlledTank())) { return; }
+	if (!ensure(AimingComponent)) { return; }
 
 	FVector HitLocation;
 
@@ -43,7 +38,7 @@ void ATankPlayerController::AimTowardsCrosshair() const
 	if (GetSightRayHitLocation(HitLocation))
 	{		
 		// Tell controlled tank to aim at this point
-		GetControlledTank()->AimAt(HitLocation);
+		AimingComponent->AimAt(HitLocation);
 	}
 
 }
@@ -92,6 +87,6 @@ bool ATankPlayerController::GetLookVectorHitLocation(FVector LookDirection, FVec
 		HitLocation = HitResult.Location;
 		return true;
 	}
-	HitLocation = FVector(0);	// Prevent seemingly random values being returned on "miss"
+	HitLocation = FVector(0);	// Prevents seemingly random values being returned on "miss"
 	return false;
 }

@@ -29,7 +29,7 @@ public:
 		void Initialise(UTankBarrel* BarrelToSet, UTankTurret* TurretToSet);
 
 	// Function to make tank aim at a location, delegated from Tank class
-	void AimAt(FVector HitLocation, float LaunchSpeed) const;
+	void AimAt(FVector HitLocation) const;
 
 protected:
 	UPROPERTY(BlueprintReadOnly, Category = "State")
@@ -44,6 +44,9 @@ private:
 
 	// Turret component of the Tank
 	UTankTurret* Turret = nullptr;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Firing")
+		float LaunchSpeed = 4000;
 
 	void MoveBarrelAndTurretTowards(FVector AimDireciton) const;
 

@@ -7,7 +7,6 @@
 #include "Tank.generated.h"
 
 class AProjectile;
-class UTankAimingComponent;
 class UTankBarrel;
 
 UCLASS()
@@ -21,15 +20,6 @@ public:
 
 	UFUNCTION(BLueprintCallable)
 		void Fire();
-
-	// Tells the tank where to aim
-	void AimAt(FVector HitLocation) const;
-
-protected:
-	virtual void BeginPlay() override;
-
-	UPROPERTY(BlueprintReadOnly)
-		UTankAimingComponent* TankAimingComponent = nullptr;
 
 private:
 	UPROPERTY(EditDefaultsOnly, Category = "Setup")
