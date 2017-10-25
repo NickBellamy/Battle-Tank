@@ -20,16 +20,6 @@ public:
 	// Sets default values for this pawn's properties
 	ATank();
 
-	// Called in the Tank Blueprint BeginPlay method
-	// Allows this to be soft coded rather than hard coded in C++
-	UFUNCTION(BLueprintCallable, Category = Setup)
-		void SetBarrelReference(UTankBarrel* BarrelToSet);
-
-	// Called in the Tank Blueprint BeginPlay method
-	// Allows this to be soft coded rather than hard coded in C++
-	UFUNCTION(BLueprintCallable, Category = Setup)
-		void SetTurretReference(UTankTurret* TurretToSet);
-
 	UFUNCTION(BLueprintCallable)
 		void Fire();
 
@@ -41,20 +31,17 @@ protected:
 		UTankAimingComponent* TankAimingComponent = nullptr;
 
 private:
-	UPROPERTY(EditDefaultsOnly, Category = Setup)
+	UPROPERTY(EditDefaultsOnly, Category = "Setup")
 		TSubclassOf<AProjectile> ProjectileBlueprint;
 
-	UPROPERTY(EditDefaultsOnly, Category = Firing)
+	UPROPERTY(EditDefaultsOnly, Category = "Firing")
 		float LaunchSpeed = 4000;
 
-	UPROPERTY(EditDefaultsOnly, Category = Firing)
+	UPROPERTY(EditDefaultsOnly, Category = "Firing")
 		float ReloadTimeInSeconds = 3;
 
-	// Called to bind functionality to input
-	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
-
 	// Local barrel for spawning projectiles
-	UTankBarrel* Barrel = nullptr;
+	UTankBarrel* Barrel = nullptr;		// TODO Remove this reference to streamline
 
 	// Used to determine firing intervals, simulating reload time
 	double LastFireTime = 0;

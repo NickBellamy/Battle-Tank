@@ -17,30 +17,10 @@ UTankAimingComponent::UTankAimingComponent()
 	// ...
 }
 
-void UTankAimingComponent::SetBarrelReference(UTankBarrel* BarrelToSet)
-{	
-	// Pointer protection
-	if (!BarrelToSet)
-	{
-		UE_LOG(LogTemp, Error, TEXT("Barrel not found from class %s"), *this->GetClass()->GetName());
-		return;
-	}
-	
-	Barrel = BarrelToSet;
-
-}
-
-void UTankAimingComponent::SetTurretReference(UTankTurret* TurretToSet)
+void UTankAimingComponent::Initialise(UTankBarrel* BarrelToSet, UTankTurret* TurretToSet)
 {
-	// Pointer protection
-	if (!TurretToSet)
-	{
-		UE_LOG(LogTemp, Error, TEXT("Turret not found from class %s"), *this->GetClass()->GetName());
-		return;
-	}
-
+	Barrel = BarrelToSet;
 	Turret = TurretToSet;
-
 }
 
 void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed) const
@@ -67,6 +47,9 @@ void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed) const
 
 void UTankAimingComponent::MoveBarrelAndTurretTowards(FVector AimDirection) const
 {
+	// Pointer protection
+	if (!Barrel || !Turret) { return; }
+
 	// Calculate the delta between the current, and desired barrel rotation
 	FRotator BarrelRotator = Barrel->GetForwardVector().Rotation();
 	FRotator AimDirectionRotator = AimDirection.Rotation();

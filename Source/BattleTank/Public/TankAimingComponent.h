@@ -24,23 +24,21 @@ class BATTLETANK_API UTankAimingComponent : public UActorComponent
 	GENERATED_BODY()
 
 public:	
-	// Sets default values for this component's properties
-	UTankAimingComponent();
-
 	// Setter method
-	void SetBarrelReference(UTankBarrel* BarrelToSet);
-
-	// Setter method
-	void SetTurretReference(UTankTurret* TurretToSet);
+	UFUNCTION(BLueprintCallable, Category = "Setup")
+		void Initialise(UTankBarrel* BarrelToSet, UTankTurret* TurretToSet);
 
 	// Function to make tank aim at a location, delegated from Tank class
 	void AimAt(FVector HitLocation, float LaunchSpeed) const;
 
 protected:
 	UPROPERTY(BlueprintReadOnly, Category = "State")
-	EFiringState FiringStatus = EFiringState::Aiming;
+		EFiringState FiringStatus = EFiringState::Aiming;
 	
 private:
+	// Sets default values for this component's properties
+	UTankAimingComponent();
+
 	// Barrel component of the Tank
 	UTankBarrel* Barrel = nullptr;
 
