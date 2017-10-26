@@ -1,35 +1,12 @@
 // Copyright Nick Bellamy.
 
 #include "Tank.h"
-#include "Engine/World.h"
-#include "Projectile.h"
-#include "TankBarrel.h"
 
-// Sets default values
+// Sets default values for this component's properties
 ATank::ATank()
 {
- 	// Set this pawn to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
+	// Set this component to be initialized when the game starts, and to be ticked every frame.  You can turn these features
+	// off to improve performance if you don't need them.
 	PrimaryActorTick.bCanEverTick = false;
-
-}
-
-void ATank::Fire()
-{
-	if (!ensure(Barrel)) { return; }
-
-	bool isReloaded = (FPlatformTime::Seconds() - LastFireTime) > ReloadTimeInSeconds;
-	
-	if (isReloaded)
-	{
-		// Spawn a projectile at the socket location on the barrel
-		FName SocketName = FName("Projectile");
-		FVector SocketLocation = Barrel->GetSocketLocation(SocketName);
-		FRotator SocketRotation = Barrel->GetSocketRotation(SocketName);
-		AProjectile* Projectile = GetWorld()->SpawnActor<AProjectile>(ProjectileBlueprint, SocketLocation, SocketRotation);
-
-		Projectile->LaunchProjectile(LaunchSpeed);
-
-		LastFireTime = FPlatformTime::Seconds();
-	} 
 
 }

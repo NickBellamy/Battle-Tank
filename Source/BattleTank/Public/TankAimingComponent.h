@@ -14,6 +14,7 @@ enum class EFiringState : uint8
 	Locked
 };
 
+class AProjectile;
 class UTankBarrel;
 class UTankTurret;
 
@@ -31,6 +32,9 @@ public:
 	// Function to make tank aim at a location, delegated from Tank class
 	void AimAt(FVector HitLocation) const;
 
+	UFUNCTION(BLueprintCallable)
+		void Fire();
+
 protected:
 	UPROPERTY(BlueprintReadOnly, Category = "State")
 		EFiringState FiringStatus = EFiringState::Aiming;
@@ -44,6 +48,15 @@ private:
 
 	// Turret component of the Tank
 	UTankTurret* Turret = nullptr;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Setup")
+		TSubclassOf<AProjectile> ProjectileBlueprint;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Firing")
+		float ReloadTimeInSeconds = 3;
+
+	// Used to determine firing intervals, simulating reload time
+	double LastFireTime = 0;
 
 	UPROPERTY(EditDefaultsOnly, Category = "Firing")
 		float LaunchSpeed = 4000;
