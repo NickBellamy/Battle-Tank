@@ -12,7 +12,25 @@ UTankAimingComponent::UTankAimingComponent()
 {
 	// Set this component to be initialized when the game starts, and to be ticked every frame.  You can turn these features
 	// off to improve performance if you don't need them.
-	PrimaryComponentTick.bCanEverTick = false;
+	PrimaryComponentTick.bCanEverTick = true;
+
+}
+
+void UTankAimingComponent::BeginPlay()
+{
+	// So that first fire is after initial reload
+	LastFireTime = FPlatformTime::Seconds();
+}
+
+void UTankAimingComponent::TickComponent(float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction *ThisTickFunction)
+{
+	// Checks to see if elapsed time from previous fire event is less than ReloadTimeInSeconds
+	if ((FPlatformTime::Seconds() - LastFireTime) < ReloadTimeInSeconds)
+	{
+		FiringStatus = EFiringState::Reloading;
+	}
+
+	// TODO Handle Aiming and Locked states
 
 }
 
@@ -48,7 +66,8 @@ void UTankAimingComponent::AimAt(FVector HitLocation) const
 
 void UTankAimingComponent::MoveBarrelAndTurretTowards(FVector AimDirection) const
 {
-	if (!ensure(Barrel && Turret)) { return; }
+	if (!ensure(Turret)) { return; }
+	if (!ensure(Barrel)) { return; }
 
 	// Calculate the delta between the current, and desired barrel rotation
 	FRotator BarrelRotator = Barrel->GetForwardVector().Rotation();
@@ -61,13 +80,11 @@ void UTankAimingComponent::MoveBarrelAndTurretTowards(FVector AimDirection) cons
 
 void UTankAimingComponent::Fire()
 {
-	if (!ensure(Barrel && ProjectileBlueprint)) { return; }
-
-	// Checks to see if elapsed time from previous fire event is greater than ReloadTimeInSeconds
-	bool isReloaded = (FPlatformTime::Seconds() - LastFireTime) > ReloadTimeInSeconds;
-
-	if (isReloaded)
+	if (FiringStatus != EFiringState::Reloading)
 	{
+		if (!ensure(Barrel)) { return; }
+		if (!ensure(ProjectileBlueprint)) { return; }
+
 		// Spawn a projectile at the socket location on the barrel
 		FName SocketName = FName("Projectile");
 		FVector SocketLocation = Barrel->GetSocketLocation(SocketName);
