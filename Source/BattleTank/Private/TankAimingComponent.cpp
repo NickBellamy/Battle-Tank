@@ -3,6 +3,7 @@
 #include "TankAimingComponent.h"
 #include "Engine/World.h"
 #include "Kismet/GameplayStatics.h"
+#include "Math/Vector.h"
 #include "Projectile.h"
 #include "TankBarrel.h"
 #include "TankTurret.h"
@@ -29,8 +30,14 @@ void UTankAimingComponent::TickComponent(float DeltaTime, enum ELevelTick TickTy
 	{
 		FiringStatus = EFiringState::Reloading;
 	}
-
-	// TODO Handle Aiming and Locked states
+	else if (IsBarrelMoving())
+	{
+		FiringStatus = EFiringState::Aiming;
+	}
+	else
+	{
+		FiringStatus = EFiringState::Locked;
+	}
 
 }
 
@@ -40,7 +47,7 @@ void UTankAimingComponent::Initialise(UTankBarrel* BarrelToSet, UTankTurret* Tur
 	Turret = TurretToSet;
 }
 
-void UTankAimingComponent::AimAt(FVector HitLocation) const
+void UTankAimingComponent::AimAt(FVector HitLocation)
 {
 	if (!ensure(Barrel)) { return; }
 
@@ -55,7 +62,7 @@ void UTankAimingComponent::AimAt(FVector HitLocation) const
 													ESuggestProjVelocityTraceOption::DoNotTrace))
 	{
 		// Convert to unit vector to get direction of launch
-		FVector AimDirection = OutLaunchVelocity.GetSafeNormal();
+		AimDirection = OutLaunchVelocity.GetSafeNormal();
 
 		MoveBarrelAndTurretTowards(AimDirection);
 	}
@@ -76,6 +83,14 @@ void UTankAimingComponent::MoveBarrelAndTurretTowards(FVector AimDirection) cons
 
 	Barrel->Elevate(DeltaRotator.Pitch);	// Elevate barrel
 	Turret->Rotate(DeltaRotator.Yaw);		// Rotate Turret
+}
+
+bool UTankAimingComponent::IsBarrelMoving() const
+{
+	if (!ensure(Barrel)) { return false; }
+
+	FVector BarrelForward = Barrel->GetForwardVector();
+	return !BarrelForward.Equals(AimDirection, 0.01);
 }
 
 void UTankAimingComponent::Fire()

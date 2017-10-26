@@ -30,7 +30,7 @@ public:
 		void Initialise(UTankBarrel* BarrelToSet, UTankTurret* TurretToSet);
 
 	// Function to make tank aim at a location, delegated from Tank class
-	void AimAt(FVector HitLocation) const;
+	void AimAt(FVector HitLocation);
 
 	UFUNCTION(BLueprintCallable)
 		void Fire();
@@ -65,6 +65,9 @@ private:
 	UPROPERTY(EditDefaultsOnly, Category = "Firing")
 		float LaunchSpeed = 4000;
 
+	FVector AimDirection;
+
 	void MoveBarrelAndTurretTowards(FVector AimDireciton) const;
 
+	bool IsBarrelMoving() const;
 };
