@@ -6,6 +6,10 @@
 #include "Components/ActorComponent.h"
 #include "TankAimingComponent.generated.h"
 
+class AProjectile;
+class UTankBarrel;
+class UTankTurret;
+
 UENUM()
 enum class EFiringState : uint8
 {
@@ -13,10 +17,6 @@ enum class EFiringState : uint8
 	Aiming,
 	Locked
 };
-
-class AProjectile;
-class UTankBarrel;
-class UTankTurret;
 
 // Holds barrel's & turret's properties and methods
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )

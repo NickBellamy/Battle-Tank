@@ -24,7 +24,7 @@ void UTankAimingComponent::Initialise(UTankBarrel* BarrelToSet, UTankTurret* Tur
 
 void UTankAimingComponent::AimAt(FVector HitLocation) const
 {
-	if (!ensure(Barrel && ProjectileBlueprint)) { return; }
+	if (!ensure(Barrel)) { return; }
 
 	// Calculate the Launch Velocity and convert to unit vector if successful
 	FVector OutLaunchVelocity;
@@ -48,7 +48,6 @@ void UTankAimingComponent::AimAt(FVector HitLocation) const
 
 void UTankAimingComponent::MoveBarrelAndTurretTowards(FVector AimDirection) const
 {
-	// Pointer protection
 	if (!ensure(Barrel && Turret)) { return; }
 
 	// Calculate the delta between the current, and desired barrel rotation
@@ -62,8 +61,9 @@ void UTankAimingComponent::MoveBarrelAndTurretTowards(FVector AimDirection) cons
 
 void UTankAimingComponent::Fire()
 {
-	if (!ensure(Barrel)) { return; }
+	if (!ensure(Barrel && ProjectileBlueprint)) { return; }
 
+	// Checks to see if elapsed time from previous fire event is greater than ReloadTimeInSeconds
 	bool isReloaded = (FPlatformTime::Seconds() - LastFireTime) > ReloadTimeInSeconds;
 
 	if (isReloaded)

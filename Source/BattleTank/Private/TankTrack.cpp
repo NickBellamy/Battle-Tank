@@ -12,4 +12,5 @@ void UTankTrack::SetThrottle(float Throttle)
 
 	// Applies force on the tank body at the location of the track
 	TankRoot->AddForceAtLocation(ForceApplied, ForceLocation);
+
 }

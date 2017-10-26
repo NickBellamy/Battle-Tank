@@ -24,8 +24,10 @@ void ATankPlayerController::Tick(float DeltaTime)
 
 }
 
-void ATankPlayerController::AimTowardsCrosshair()
+void ATankPlayerController::AimTowardsCrosshair() const
 {
+	// TODO AimingComponent set on every tick; is this warranted?
+	// If not, could the AimingComponent set in BeginPlay() be used instead?
 	UTankAimingComponent* AimingComponent = GetPawn()->FindComponentByClass<UTankAimingComponent>();
 
 	if (!ensure(AimingComponent)) { return; }
