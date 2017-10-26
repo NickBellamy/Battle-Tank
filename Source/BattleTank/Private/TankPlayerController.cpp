@@ -26,6 +26,13 @@ void ATankPlayerController::Tick(float DeltaTime)
 
 void ATankPlayerController::AimTowardsCrosshair() const
 {
+	// Pointer protection needed here to prevent a bug that results in UE Editor crashing
+	// when PlayerController_BP is opened.  The bug causes the ATankPlayerController::Tick()
+	// event to fire on opening the blueprint, which then calls AimTowardsCrosshair().
+	// Because there is no Pawn constructed when opening the Blueprint, GetPawn() returns a
+	// nullptr, which causes the crash.  https://issues.unrealengine.com/issue/UE-36929
+	if (!ensure(GetPawn())) { return; }
+
 	// TODO AimingComponent set on every tick; is this warranted?
 	// If not, could the AimingComponent set in BeginPlay() be used instead?
 	UTankAimingComponent* AimingComponent = GetPawn()->FindComponentByClass<UTankAimingComponent>();
