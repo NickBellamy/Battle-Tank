@@ -10,7 +10,7 @@ AProjectile::AProjectile()
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
-	// No need to protect pointer as it's added at construction
+
 	ProjectileMovement = CreateDefaultSubobject<UProjectileMovementComponent>(FName("Projectile Movement"));
 
 	// Prevent projectile firing on initialization
@@ -34,6 +34,8 @@ void AProjectile::Tick(float DeltaTime)
 
 void AProjectile::LaunchProjectile(float Speed) const
 {
+	// No need to protect pointer as it's added at construction
+
 	// ForwardVector is the correct orientation as on initialization of the projectile 
 	// in Tank::Fire(), the rotation is set to be the same as the tank barrel's rotation
 	ProjectileMovement->SetVelocityInLocalSpace(FVector::ForwardVector * Speed);

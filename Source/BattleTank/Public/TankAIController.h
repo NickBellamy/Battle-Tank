@@ -6,8 +6,6 @@
 #include "AIController.h"
 #include "TankAIController.generated.h"
 
-class ATank;
-
 UCLASS()
 class BATTLETANK_API ATankAIController : public AAIController
 {
@@ -16,10 +14,6 @@ class BATTLETANK_API ATankAIController : public AAIController
 public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
-
-protected:
-	// Called when the game starts or when spawned
-	virtual void BeginPlay() override;
 
 private:
 	// How close the AI tank can get towards the player

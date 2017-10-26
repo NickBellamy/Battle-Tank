@@ -6,8 +6,11 @@
 #include "GameFramework/PlayerController.h"
 #include "TankPlayerController.generated.h"
 
-class ATank;
+class UTankAimingComponent;
 
+/**
+ * Responsible for helping the player aim.
+ */
 UCLASS()
 class BATTLETANK_API ATankPlayerController : public APlayerController
 {
@@ -18,9 +21,13 @@ public:
 	virtual void Tick(float DeltaTime) override;
 	
 protected:
-	// Get the tank pawn that the player controller is possessing and cast it to ATank
-	UFUNCTION(BlueprintCallable, Category = "Setup")
-		ATank* GetControlledTank() const;
+	// Called when the game starts or when spawned
+	virtual void BeginPlay() override;
+
+	// Sets an event that can be triggered and leveraged in blueprint
+	// This function doesn't need to be set in the .cpp file
+	UFUNCTION(BlueprintImplementableEvent, Category = "Setup")
+		void FoundAimingComponent(UTankAimingComponent* AimCompRef);
 
 private:
 	UPROPERTY(EditDefaultsOnly)	
