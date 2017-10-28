@@ -2,6 +2,7 @@
 
 #include "TankTrack.h"
 #include "Engine/World.h"
+#include "Math/UnrealMathUtility.h"
 
 // Sets default values for this component's properties
 UTankTrack::UTankTrack()
@@ -21,6 +22,38 @@ void UTankTrack::BeginPlay()
 
 }
 
+// Called from the Engine whenever the ground is in contact with the tank track
+void UTankTrack::OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, 
+					   UPrimitiveComponent* OtherComponent, FVector NormalImpulse, const FHitResult& Hit)
+{
+	UE_LOG(LogTemp, Warning, TEXT("Collision from: %s"), *GetName());
+
+	DriveTrack();
+
+	// Apply corrective force to prevent the tank "slipping" sideways
+	ApplySidewaysForce();
+
+	// TODO Reset throttle
+}
+
+void UTankTrack::SetThrottle(float Throttle)
+{
+	CurrentThrottle = FMath::Clamp<float>(CurrentThrottle + Throttle, -1, 1);
+
+}
+
+void UTankTrack::DriveTrack()
+{
+	// Setup parameters for AddForceAtLocation
+	FVector ForceApplied = GetForwardVector() * CurrentThrottle * TrackMaxDrivingForce;
+	FVector ForceLocation = GetComponentLocation();
+	// Get tank body and cast it to UPrimitiveComponent so AddForceAtLocation can be called
+	UPrimitiveComponent* TankRoot = Cast<UPrimitiveComponent>(GetOwner()->GetRootComponent());
+
+	// Applies force on the tank body at the location of the track
+	TankRoot->AddForceAtLocation(ForceApplied, ForceLocation);
+}
+
 void UTankTrack::ApplySidewaysForce()
 {
 	// Calculate the speed of the tank velocity in the right direction
@@ -36,29 +69,5 @@ void UTankTrack::ApplySidewaysForce()
 
 	// Apply the CorrectionForce to the tank track
 	TankRoot->AddForce(CorrectionForce / 2);	// Divide by two as there are two tracks
-}
-
-// Called from the Engine whenever the ground is in contact with the tank track
-void UTankTrack::OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, 
-					   UPrimitiveComponent* OtherComponent, FVector NormalImpulse, const FHitResult& Hit)
-{
-	UE_LOG(LogTemp, Warning, TEXT("Collision from: %s"), *GetName());
-
-	// TODO Drive the tracks
-
-	// Apply corrective force to prevent the tank "slipping" sideways
-	ApplySidewaysForce();
-}
-
-void UTankTrack::SetThrottle(float Throttle)
-{
-	// Setup parameters for AddForceAtLocation
-	FVector ForceApplied = GetForwardVector() * Throttle * TrackMaxDrivingForce;
-	FVector ForceLocation = GetComponentLocation();
-	// Get tank body and cast it to UPrimitiveComponent so AddForceAtLocation can be called
-	UPrimitiveComponent* TankRoot = Cast<UPrimitiveComponent>(GetOwner()->GetRootComponent());
-
-	// Applies force on the tank body at the location of the track
-	TankRoot->AddForceAtLocation(ForceApplied, ForceLocation);
 
 }

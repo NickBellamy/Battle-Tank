@@ -23,6 +23,8 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Input")
 		void SetThrottle(float Throttle);
 
+	void DriveTrack();
+
 protected:
 	virtual void BeginPlay() override;
 
@@ -35,4 +37,6 @@ private:
 	// Has to be a UFUNCTION so it can be triggered from within the Engine
 	UFUNCTION()
 		void OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent, FVector NormalImpulse, const FHitResult& Hit);
+	
+	float CurrentThrottle = 0;
 };
