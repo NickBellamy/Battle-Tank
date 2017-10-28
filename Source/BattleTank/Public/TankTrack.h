@@ -23,10 +23,16 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Input")
 		void SetThrottle(float Throttle);
 
+protected:
+	virtual void BeginPlay() override;
+
 private:
 	// Sets default values for this component's properties
 	UTankTrack();
 
 	virtual void TickComponent(float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction *ThisTickFunction) override;
 	
+	// Has to be a UFUNCTION so it can be triggered from within the Engine
+	UFUNCTION()
+		void OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent, FVector NormalImpulse, const FHitResult& Hit);
 };
