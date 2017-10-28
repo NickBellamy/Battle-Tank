@@ -30,7 +30,7 @@ private:
 	// Sets default values for this component's properties
 	UTankTrack();
 
-	virtual void TickComponent(float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction *ThisTickFunction) override;
+	void ApplySidewaysForce();
 	
 	// Has to be a UFUNCTION so it can be triggered from within the Engine
 	UFUNCTION()
