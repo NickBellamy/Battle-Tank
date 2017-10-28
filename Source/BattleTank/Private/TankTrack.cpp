@@ -26,14 +26,13 @@ void UTankTrack::BeginPlay()
 void UTankTrack::OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, 
 					   UPrimitiveComponent* OtherComponent, FVector NormalImpulse, const FHitResult& Hit)
 {
-	UE_LOG(LogTemp, Warning, TEXT("Collision from: %s"), *GetName());
-
 	DriveTrack();
 
 	// Apply corrective force to prevent the tank "slipping" sideways
 	ApplySidewaysForce();
 
-	// TODO Reset throttle
+	// Reset Throttle
+	CurrentThrottle = 0;
 }
 
 void UTankTrack::SetThrottle(float Throttle)
