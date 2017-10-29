@@ -35,6 +35,8 @@ public:
 	UFUNCTION(BLueprintCallable)
 		void Fire();
 
+	EFiringState GetFiringState() const;
+
 protected:
 	virtual void BeginPlay() override;
 

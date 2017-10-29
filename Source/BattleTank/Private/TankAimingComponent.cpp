@@ -45,6 +45,11 @@ void UTankAimingComponent::TickComponent(float DeltaTime, enum ELevelTick TickTy
 
 }
 
+EFiringState UTankAimingComponent::GetFiringState() const
+{
+	return FiringStatus;
+}
+
 void UTankAimingComponent::Initialise(UTankBarrel* BarrelToSet, UTankTurret* TurretToSet)
 {
 	Barrel = BarrelToSet;
