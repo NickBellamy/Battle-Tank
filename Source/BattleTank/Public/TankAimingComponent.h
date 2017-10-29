@@ -15,7 +15,8 @@ enum class EFiringState : uint8
 {
 	Reloading,
 	Aiming,
-	Locked
+	Locked,
+	OutOfAmmo
 };
 
 // Holds barrel's & turret's properties and methods
@@ -32,10 +33,13 @@ public:
 	// Function to make tank aim at a location, delegated from Tank class
 	void AimAt(FVector HitLocation);
 
-	UFUNCTION(BLueprintCallable)
+	UFUNCTION(BlueprintCallable, Category = "Firing")
 		void Fire();
 
 	EFiringState GetFiringState() const;
+
+	UFUNCTION(BlueprintCallable, Category = "Firing")
+	int GetRoundsLeft() const;
 
 protected:
 	virtual void BeginPlay() override;
@@ -65,11 +69,13 @@ private:
 	double LastFireTime = 0;
 
 	UPROPERTY(EditDefaultsOnly, Category = "Firing")
-		float LaunchSpeed = 4000;
+		float LaunchSpeed = 8000;
 
 	FVector AimDirection;
 
 	void MoveBarrelAndTurretTowards(FVector AimDireciton) const;
 
 	bool IsBarrelMoving() const;
+
+	int RoundsLeft = 3;
 };
