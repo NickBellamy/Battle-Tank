@@ -67,10 +67,11 @@ bool ATankPlayerController::GetSightRayHitLocation(FVector& HitLocation) const
 	if (GetLookDirection(CrosshairLocation, LookDirection))
 	{
 		// Line trace along that look direction, and see what we hit (up to maximum range)
-		GetLookVectorHitLocation(LookDirection, HitLocation);
+		// Returns true if we hit something
+		return GetLookVectorHitLocation(LookDirection, HitLocation);
 	}
 
-	return true;	// TODO Only return true if landscape is hit by Raycast
+	return false;
 
 }
 
