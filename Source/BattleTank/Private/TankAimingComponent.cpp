@@ -32,7 +32,7 @@ void UTankAimingComponent::TickComponent(float DeltaTime, enum ELevelTick TickTy
 	// If out of ammo
 	if (RoundsLeft <= 0)
 	{
-		EFiringStatus = EFiringState::OutOfAmmo;
+		FiringStatus = EFiringState::OutOfAmmo;
 	}
 	// Checks to see if elapsed time from previous fire event is less than ReloadTimeInSeconds
 	else if ((FPlatformTime::Seconds() - LastFireTime) < ReloadTimeInSeconds)
@@ -124,7 +124,7 @@ bool UTankAimingComponent::IsBarrelMoving() const
 
 void UTankAimingComponent::Fire()
 {
-	if (FiringStatus = EFiringState::Locked || FiringStatus = EFiringState::Aiming)
+	if (FiringStatus == EFiringState::Locked || FiringStatus == EFiringState::Aiming)
 	{
 		if (!ensure(Barrel)) { return; }
 		if (!ensure(ProjectileBlueprint)) { return; }
