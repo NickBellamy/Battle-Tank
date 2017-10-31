@@ -65,11 +65,15 @@ private:
 	UPROPERTY(EditDefaultsOnly, Category = "Firing")
 		float ReloadTimeInSeconds = 3;
 
-	// Used to determine firing intervals, simulating reload time
-	double LastFireTime = 0;
-
 	UPROPERTY(EditDefaultsOnly, Category = "Firing")
 		float LaunchSpeed = 8000;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Firing")
+		int32 RoundsLeft = 3;		// Cannot use unsigned int (uint32) as it's incompatible with Blueprint
+									// https://answers.unrealengine.com/questions/98206/missing-support-for-uint32-int64-uint64.html
+
+	// Used to determine firing intervals, simulating reload time
+	double LastFireTime = 0;
 
 	FVector AimDirection;
 
@@ -77,5 +81,4 @@ private:
 
 	bool IsBarrelMoving() const;
 
-	int RoundsLeft = 3;
 };
