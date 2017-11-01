@@ -18,12 +18,10 @@ AProjectile::AProjectile()
 	CollisionMesh->SetVisibility(false);				// Turns off visibility of projectiles; will be relying on particle effects
 
 	LaunchBlast = CreateDefaultSubobject <UParticleSystemComponent>(FName("Launch Blast"));
-	LaunchBlast->AttachTo(RootComponent);				// Attach this particle system to the Static Mesh Component we set as root
-														// TODO AttachTo() is deprecating, replace with new API
+	LaunchBlast->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepRelativeTransform);
 
 	ImpactBlast = CreateDefaultSubobject <UParticleSystemComponent>(FName("Impact Blast"));
-	ImpactBlast->AttachTo(RootComponent);				// Attach this particle system to the Static Mesh Component we set as root
-														// TODO AttachTo() is deprecating, replace with new API
+	ImpactBlast->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepRelativeTransform);
 	ImpactBlast->bAutoActivate = false;					// Prevent impact blast particle effect triggering on initialization
 
 	ProjectileMovement = CreateDefaultSubobject<UProjectileMovementComponent>(FName("Projectile Movement"));
