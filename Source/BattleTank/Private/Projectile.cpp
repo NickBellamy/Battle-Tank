@@ -19,6 +19,12 @@ AProjectile::AProjectile()
 
 	LaunchBlast = CreateDefaultSubobject <UParticleSystemComponent>(FName("Launch Blast"));
 	LaunchBlast->AttachTo(RootComponent);				// Attach this particle system to the Static Mesh Component we set as root
+														// TODO AttachTo() is deprecating, replace with new API
+
+	ImpactBlast = CreateDefaultSubobject <UParticleSystemComponent>(FName("Impact Blast"));
+	ImpactBlast->AttachTo(RootComponent);				// Attach this particle system to the Static Mesh Component we set as root
+														// TODO AttachTo() is deprecating, replace with new API
+	ImpactBlast->bAutoActivate = false;					// Prevent impact blast particle effect triggering on initialization
 
 	ProjectileMovement = CreateDefaultSubobject<UProjectileMovementComponent>(FName("Projectile Movement"));
 	ProjectileMovement->bAutoActivate = false;			// Prevent projectile firing on initialization
@@ -30,6 +36,7 @@ void AProjectile::BeginPlay()
 {
 	Super::BeginPlay();
 	
+	CollisionMesh->OnComponentHit.AddDynamic(this, &AProjectile::OnHit);
 }
 
 // Called every frame
@@ -50,4 +57,12 @@ void AProjectile::LaunchProjectile(float Speed) const
 	// Reactivate the ProjectileMovementComponent that was deactivated in the Projectile constructor
 	ProjectileMovement->Activate();
 
+}
+
+// Called from the Engine whenever the projectile hits another object
+void AProjectile::OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor,
+	UPrimitiveComponent* OtherComponent, FVector NormalImpulse, const FHitResult& Hit)
+{
+	LaunchBlast->Deactivate();
+	ImpactBlast->Activate();
 }
