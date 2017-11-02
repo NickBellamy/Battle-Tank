@@ -60,4 +60,7 @@ void AProjectile::OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor,
 	LaunchBlast->Deactivate();
 	ImpactBlast->Activate();
 	ExplosionForce->FireImpulse();
+	
+	SetRootComponent(ImpactBlast);		// Set new root component - CollisionMesh was root component; destroying it would destroy all child components
+	CollisionMesh->DestroyComponent();
 }
