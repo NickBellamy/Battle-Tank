@@ -18,18 +18,14 @@ AProjectile::AProjectile()
 	CollisionMesh->SetVisibility(false);				// Turns off visibility of projectiles; will be relying on particle effects
 
 	LaunchBlast = CreateDefaultSubobject <UParticleSystemComponent>(FName("Launch Blast"));
-	// TODO Should SetupAttachment() be used instead as it is called in the Constructor?
-	// https://docs.unrealengine.com/latest/INT/API/Runtime/Engine/Components/USceneComponent/SetupAttachment/index.html
-	LaunchBlast->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepRelativeTransform);
+	LaunchBlast->SetupAttachment(RootComponent);
 
 	ImpactBlast = CreateDefaultSubobject <UParticleSystemComponent>(FName("Impact Blast"));
-	// TODO Should SetupAttachment() be used instead as it is called in the Constructor?
-	// https://docs.unrealengine.com/latest/INT/API/Runtime/Engine/Components/USceneComponent/SetupAttachment/index.html
-	ImpactBlast->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepRelativeTransform);
+	ImpactBlast->SetupAttachment(RootComponent);
 	ImpactBlast->bAutoActivate = false;					// Prevent impact blast particle effect triggering on initialization
 
 	ExplosionForce = CreateDefaultSubobject <URadialForceComponent>(FName("Explosion Force"));
-	ExplosionForce->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepRelativeTransform);
+	ExplosionForce->SetupAttachment(RootComponent);
 
 	ProjectileMovement = CreateDefaultSubobject<UProjectileMovementComponent>(FName("Projectile Movement"));
 	ProjectileMovement->bAutoActivate = false;			// Prevent projectile firing on initialization
