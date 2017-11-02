@@ -40,7 +40,13 @@ private:
 		URadialForceComponent* ExplosionForce = nullptr;
 
 	UProjectileMovementComponent* ProjectileMovement = nullptr;
+
+	UPROPERTY(EditAnywhere, Category = "Setup")
+		float DestroyDelay = 5;		// Set to maximum time of ImpactBlast's particle effect duration
 	
 	UFUNCTION()
 		void OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent, FVector NormalImpulse, const FHitResult& Hit);
+
+	void OnTimerExpire();
+
 };

@@ -2,9 +2,11 @@
 
 #include "Projectile.h"
 #include "Components/StaticMeshComponent.h"
+#include "Engine/World.h"
 #include "GameFramework/ProjectileMovementComponent.h"
 #include "Particles/ParticleSystemComponent.h"
 #include "PhysicsEngine/RadialForceComponent.h"
+#include "TimerManager.h"
 
 // Sets default values
 AProjectile::AProjectile()
@@ -63,4 +65,20 @@ void AProjectile::OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor,
 	
 	SetRootComponent(ImpactBlast);		// Set new root component - CollisionMesh was root component; destroying it would destroy all child components
 	CollisionMesh->DestroyComponent();
+
+	// Call OnTimerExpire after DestroyDelay on this Projectile
+	FTimerHandle TimerHandle;			// Unused Out parameter in SetTimer()
+	GetWorld()->GetTimerManager().SetTimer(TimerHandle, this, &AProjectile::OnTimerExpire, DestroyDelay);
+
+}
+
+// Cannot call Destroy() directly from SetTimer() because "this" is passed into SetTimer() which is of 
+// object type AProjectile, and Destroy from the AActor class.  As Destroy() is not virtual (so cannot
+// be overridden), this causes a type mismatch between the two parameters, which results in a
+// compilation error.  To get around this, the delegate function OnTimerExpire() is created which can
+// be called from SetTimer.
+void AProjectile::OnTimerExpire()
+{
+	Destroy();
+
 }
