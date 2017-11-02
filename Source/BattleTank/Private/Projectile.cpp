@@ -4,6 +4,7 @@
 #include "Components/StaticMeshComponent.h"
 #include "Engine/World.h"
 #include "GameFramework/ProjectileMovementComponent.h"
+#include "Kismet/GameplayStatics.h"
 #include "Particles/ParticleSystemComponent.h"
 #include "PhysicsEngine/RadialForceComponent.h"
 #include "TimerManager.h"
@@ -65,6 +66,14 @@ void AProjectile::OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor,
 	
 	SetRootComponent(ImpactBlast);		// Set new root component - CollisionMesh was root component; destroying it would destroy all child components
 	CollisionMesh->DestroyComponent();
+
+	UGameplayStatics::ApplyRadialDamage(this, 
+										ProjectileDamage, 
+										GetActorLocation(), 
+										ExplosionForce->Radius,		// Radius of ExplosionForce always the same as damage radius
+										UDamageType::StaticClass(),
+										TArray<AActor*>()			// Empty array means all AActors will be affected
+										);
 
 	// Call OnTimerExpire after DestroyDelay on this Projectile
 	FTimerHandle TimerHandle;			// Unused Out parameter in SetTimer()

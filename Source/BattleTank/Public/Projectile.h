@@ -43,6 +43,9 @@ private:
 
 	UPROPERTY(EditAnywhere, Category = "Setup")
 		float DestroyDelay = 5;		// Set to maximum time of ImpactBlast's particle effect duration
+
+	UPROPERTY(EditAnywhere, Category = "Setup")
+		float ProjectileDamage = 20;
 	
 	UFUNCTION()
 		void OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent, FVector NormalImpulse, const FHitResult& Hit);

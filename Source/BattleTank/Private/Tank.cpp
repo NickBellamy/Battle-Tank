@@ -10,3 +10,20 @@ ATank::ATank()
 	PrimaryActorTick.bCanEverTick = false;
 
 }
+
+float ATank::TakeDamage(float DamageAmount,	struct FDamageEvent const & DamageEvent, class AController * EventInstigator, AActor * DamageCauser)
+{
+	// Creates int version of DamageAmount because when clamping, we don't want floats of 0
+	// being compared with other floats of 0 as rounding errors can occur, altering the logic
+	int32 DamagePoints = FPlatformMath::RoundToInt(DamageAmount);
+	int32 DamageToApply = FMath::Clamp(DamagePoints, 0, CurrentHealth);
+
+	CurrentHealth -= DamageToApply;
+
+	if (CurrentHealth <= 0)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("%s died!"), *GetName());
+	}
+	return DamageToApply;
+
+}
