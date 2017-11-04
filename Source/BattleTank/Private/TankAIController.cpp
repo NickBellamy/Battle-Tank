@@ -1,10 +1,30 @@
 // Copyright Nick Bellamy.
 
 #include "TankAIController.h"
-#include "TankAimingComponent.h"
 #include "Engine/World.h"
+#include "Tank.h"
+#include "TankAimingComponent.h"
 // Depends on movement component via pathfinding system
 
+void ATankAIController::SetPawn(APawn* InPawn)
+{
+	Super::SetPawn(InPawn);
+
+	if (InPawn)
+	{
+		ATank* PossessedTank = Cast<ATank>(InPawn);
+		if (!ensure(PossessedTank)) { return; }
+
+		// Subscribe our local method to the tank's death event
+		PossessedTank->OnDeath.AddUniqueDynamic(this, &ATankAIController::OnPossessedTankDeath);
+	}
+
+}
+
+void ATankAIController::OnPossessedTankDeath()
+{
+	UE_LOG(LogTemp, Warning, TEXT("Tank dead"));
+}
 
 void ATankAIController::Tick(float DeltaTime)
 {

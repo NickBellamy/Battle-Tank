@@ -22,7 +22,8 @@ float ATank::TakeDamage(float DamageAmount,	struct FDamageEvent const & DamageEv
 
 	if (CurrentHealth <= 0)
 	{
-		UE_LOG(LogTemp, Warning, TEXT("%s died!"), *GetName());
+		// Broadcasts OnDeath that will be picked up by listener functions
+		OnDeath.Broadcast();
 	}
 	return DamageToApply;
 

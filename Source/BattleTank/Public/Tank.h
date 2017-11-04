@@ -6,6 +6,9 @@
 #include "GameFramework/Pawn.h"
 #include "Tank.generated.h"
 
+// Declares delegate function of type FTankDelegate
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FTankDelegate);
+
 UCLASS()
 class BATTLETANK_API ATank : public APawn
 {
@@ -21,6 +24,9 @@ public:
 	// Returns current health as a value between 0 and 1
 	UFUNCTION(BlueprintPure, Category = "Health")		// BlueprintPure is essentially "const" for Blueprints
 		float GetHealthPercent() const;
+
+	// Creates OnDeath of type FTankDelegate
+	FTankDelegate OnDeath;
 
 private:
 	// Used in calculation of GetHealthPercent()
