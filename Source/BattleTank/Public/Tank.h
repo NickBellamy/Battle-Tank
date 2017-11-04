@@ -28,11 +28,15 @@ public:
 	// Creates OnDeath of type FTankDelegate
 	FTankDelegate OnDeath;
 
+protected:
+	// Called when the game starts or when spawned
+	virtual void BeginPlay() override;
+
 private:
-	// Used in calculation of GetHealthPercent()
+	// Used in calculation of GetHealthPercent() and can be adjusted in the blueprint
 	UPROPERTY(EditDefaultsOnly, Category = "Setup")
 		int32 StartingHealth = 100;
 
 	UPROPERTY(VisibleAnywhere, Category = "Health")
-		int32 CurrentHealth = StartingHealth;
+		int32 CurrentHealth;	// Initialised in BeginPlay()
 };

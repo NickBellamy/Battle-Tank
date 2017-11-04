@@ -11,6 +11,14 @@ ATank::ATank()
 
 }
 
+void ATank::BeginPlay()
+{
+	Super::BeginPlay();
+
+	// CurrentHealth set here to allow consideration of any changes to the value set in the blueprint.
+	CurrentHealth = StartingHealth;
+}
+
 float ATank::TakeDamage(float DamageAmount,	struct FDamageEvent const & DamageEvent, class AController * EventInstigator, AActor * DamageCauser)
 {
 	// Creates int version of DamageAmount because when clamping, we don't want floats of 0
