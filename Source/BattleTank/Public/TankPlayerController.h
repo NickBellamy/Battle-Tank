@@ -53,4 +53,12 @@ private:
 	// Return OUT parameter, true if hit landscape	
 	bool GetSightRayHitLocation(FVector& HitLocation) const;
 
+	// Override SetPawn() to allow subscription to the tanks' OnDeath call
+	// Cannot be done in BeginPlay() or in the constructor because the call
+	// could be made before the necessary components are properly constructed.
+	virtual void SetPawn(APawn* InPawn) override;
+
+	UFUNCTION()
+		void OnPossessedTankDeath();
+
 };
