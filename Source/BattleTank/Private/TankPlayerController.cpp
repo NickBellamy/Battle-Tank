@@ -76,7 +76,7 @@ void ATankPlayerController::AimTowardsCrosshair() const
 // Get world location of linetrace through crosshair
 // Returns true if hits anywhere but Sky Box
 // Updates HitLocation with the location to hit
-bool ATankPlayerController::GetSightRayHitLocation(FVector& HitLocation) const
+bool ATankPlayerController::GetSightRayHitLocation(FVector& OutHitLocation) const
 {
 	// Find the crosshair position in pixel coordinates
 	int32 ViewportSizeX, ViewportSizeY;
@@ -89,21 +89,21 @@ bool ATankPlayerController::GetSightRayHitLocation(FVector& HitLocation) const
 	{
 		// Line trace along that look direction, and see what we hit (up to maximum range)
 		// Returns true if we hit something
-		return GetLookVectorHitLocation(LookDirection, HitLocation);
+		return GetLookVectorHitLocation(LookDirection, OutHitLocation);
 	}
 
 	return false;
 
 }
 
-bool ATankPlayerController::GetLookDirection(FVector2D ScreenLocation, FVector& LookDirection) const
+bool ATankPlayerController::GetLookDirection(FVector2D ScreenLocation, FVector& OutLookDirection) const
 {
 	FVector CameraWorldLocation;	// Not used; only needed for DeprojectScreenPositionToWorld parameter
-	return DeprojectScreenPositionToWorld(ScreenLocation.X, ScreenLocation.Y, CameraWorldLocation, LookDirection);
+	return DeprojectScreenPositionToWorld(ScreenLocation.X, ScreenLocation.Y, CameraWorldLocation, OutLookDirection);
 	
 }
 
-bool ATankPlayerController::GetLookVectorHitLocation(FVector LookDirection, FVector& HitLocation) const
+bool ATankPlayerController::GetLookVectorHitLocation(FVector LookDirection, FVector& OutHitLocation) const
 {
 	FHitResult HitResult;
 	FVector StartLocation = PlayerCameraManager->GetCameraLocation();
@@ -115,9 +115,9 @@ bool ATankPlayerController::GetLookVectorHitLocation(FVector LookDirection, FVec
 	// or make sure the tank pawn is passed through on the collision channel
 	if (GetWorld()->LineTraceSingleByChannel(HitResult, StartLocation, EndLocation,	ECC_Camera))
 	{
-		HitLocation = HitResult.Location;
+		OutHitLocation = HitResult.Location;
 		return true;
 	}
-	HitLocation = FVector(0);	// Prevents seemingly random values being returned on "miss"
+	OutHitLocation = FVector(0);	// Prevents seemingly random values being returned on "miss"
 	return false;
 }

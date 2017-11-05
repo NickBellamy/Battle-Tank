@@ -44,14 +44,14 @@ private:
 
 	// Returns true if look direction can be determined
 	// Sets out parameter LookDireciton to a unit vector of that direction
-	bool GetLookDirection(FVector2D ScreenLocation, FVector& LookDirection) const;
+	bool GetLookDirection(FVector2D ScreenLocation, FVector& OutLookDirection) const;
 
 	// Returns true if blocking hit is found
 	// Sets out parameter HitLocation to the point in 3D space that would be hit
-	bool GetLookVectorHitLocation(FVector LookDirection, FVector& HitLocation) const;
+	bool GetLookVectorHitLocation(FVector LookDirection, FVector& OutHitLocation) const;
 
 	// Return OUT parameter, true if hit landscape	
-	bool GetSightRayHitLocation(FVector& HitLocation) const;
+	bool GetSightRayHitLocation(FVector& OutHitLocation) const;
 
 	// Override SetPawn() to allow subscription to the tanks' OnDeath call
 	// Cannot be done in BeginPlay() or in the constructor because the call
