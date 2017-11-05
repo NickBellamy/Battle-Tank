@@ -113,7 +113,7 @@ bool ATankPlayerController::GetLookVectorHitLocation(FVector LookDirection, FVec
 	// At the moment it appears to hit its own tank pawn when moving the camera low down
 	// Possibly move the start position to be above the tank (instead of at the camera)
 	// or make sure the tank pawn is passed through on the collision channel
-	if (GetWorld()->LineTraceSingleByChannel(HitResult, StartLocation, EndLocation,	ECC_Visibility))
+	if (GetWorld()->LineTraceSingleByChannel(HitResult, StartLocation, EndLocation,	ECC_Camera))
 	{
 		HitLocation = HitResult.Location;
 		return true;
