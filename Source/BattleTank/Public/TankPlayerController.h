@@ -61,4 +61,5 @@ private:
 	UFUNCTION()
 		void OnPossessedTankDeath();
 
+	UTankAimingComponent* AimingComponent = nullptr;
 };

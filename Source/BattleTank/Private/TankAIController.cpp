@@ -37,7 +37,7 @@ void ATankAIController::Tick(float DeltaTime)
 	if (!ensure(PlayerTank && ControlledTank)) { return; }
 	{
 		// Move towards the player
-		MoveToActor(PlayerTank, AcceptanceRadius);	// TODO Check AcceptanceRadius is sensible
+		MoveToActor(PlayerTank, AcceptanceRadius);
 
 		// Aim at the player
 		UTankAimingComponent* AimingComponent = ControlledTank->FindComponentByClass<UTankAimingComponent>();

@@ -9,7 +9,7 @@ void ATankPlayerController::BeginPlay()
 {
 	Super::BeginPlay();
 
-	UTankAimingComponent* AimingComponent = GetPawn()->FindComponentByClass<UTankAimingComponent>();
+	AimingComponent = GetPawn()->FindComponentByClass<UTankAimingComponent>();
 	
 	if (!ensure(AimingComponent)) { return; }
 	
@@ -54,17 +54,10 @@ void ATankPlayerController::AimTowardsCrosshair() const
 	// nullptr, which causes the crash.  https://issues.unrealengine.com/issue/UE-36929
 	if (!(GetPawn())) { return; }
 
-	// TODO AimingComponent set on every tick; is this warranted?
-	// If not, could the AimingComponent set in BeginPlay() be used instead?
-	UTankAimingComponent* AimingComponent = GetPawn()->FindComponentByClass<UTankAimingComponent>();
-
 	if (!ensure(AimingComponent)) { return; }
 
 	FVector HitLocation;
 
-	// TODO Look at implementing GetHitResultAtScreenPosition() for a more elegant solution
-	// See here: https://community.gamedev.tv/t/unreal-provides-a-much-simpler-way-to-accomplish-all-of-this/2557
-	// https://docs.unrealengine.com/latest/INT/API/Runtime/Engine/GameFramework/APlayerController/GetHitResultAtScreenPosition/1/index.html
 	if (GetSightRayHitLocation(HitLocation))
 	{		
 		// Tell controlled tank to aim at this point
@@ -109,10 +102,6 @@ bool ATankPlayerController::GetLookVectorHitLocation(FVector LookDirection, FVec
 	FVector StartLocation = PlayerCameraManager->GetCameraLocation();
 	FVector EndLocation = StartLocation + (LookDirection * LineTraceRange);
 
-	// TODO Ensure line trace is correctly working
-	// At the moment it appears to hit its own tank pawn when moving the camera low down
-	// Possibly move the start position to be above the tank (instead of at the camera)
-	// or make sure the tank pawn is passed through on the collision channel
 	if (GetWorld()->LineTraceSingleByChannel(HitResult, StartLocation, EndLocation,	ECC_Camera))
 	{
 		OutHitLocation = HitResult.Location;

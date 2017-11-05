@@ -75,9 +75,8 @@ void UTankAimingComponent::AimAt(FVector HitLocation)
 	FVector StartLocation = Barrel->GetSocketLocation(FName("Projectile"));
 	if (UGameplayStatics::SuggestProjectileVelocity(this, OutLaunchVelocity, StartLocation, 
 													HitLocation, LaunchSpeed, false, 0.0f, 0.0f,
-													// TODO Is DoNotTrace the correct parameter?
-													// Asked for clarification here:
-													// https://community.gamedev.tv/t/whats-the-difference-between-the-parameter-types/45040
+													// DoNotTrace results in a less sensitive aiming system
+													// when trying to obtain a EFiringState::Locked state
 													ESuggestProjVelocityTraceOption::DoNotTrace))
 	{
 		// Convert to unit vector to get direction of launch
