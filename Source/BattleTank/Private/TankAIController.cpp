@@ -34,20 +34,20 @@ void ATankAIController::Tick(float DeltaTime)
 	APawn* ControlledTank = GetPawn();
 	APawn* PlayerTank = GetWorld()->GetFirstPlayerController()->GetPawn();
 
-	if (!ensure(PlayerTank && ControlledTank)) { return; }
+	// PlayerTank not ensured as this condition triggers when player dies and goes into spectator mode
+	if (!PlayerTank || !ensure(ControlledTank)) { return; }
+	
+	// Move towards the player
+	MoveToActor(PlayerTank, AcceptanceRadius);
+
+	// Aim at the player
+	UTankAimingComponent* AimingComponent = ControlledTank->FindComponentByClass<UTankAimingComponent>();
+	AimingComponent->AimAt(PlayerTank->GetActorLocation());
+
+	// if locked
+	if(AimingComponent->GetFiringState() == EFiringState::Locked)
 	{
-		// Move towards the player
-		MoveToActor(PlayerTank, AcceptanceRadius);
-
-		// Aim at the player
-		UTankAimingComponent* AimingComponent = ControlledTank->FindComponentByClass<UTankAimingComponent>();
-		AimingComponent->AimAt(PlayerTank->GetActorLocation());
-
-		// if locked
-		if(AimingComponent->GetFiringState() == EFiringState::Locked)
-		{
-			AimingComponent->Fire();
-		}				
-	}
+		AimingComponent->Fire();
+	}				
 
 }
